@@ -1,5 +1,9 @@
 package com.sudheer.Introductiontospiring.game;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+
+@Component
 public class SuperContra implements Game {
 
 	@Override
