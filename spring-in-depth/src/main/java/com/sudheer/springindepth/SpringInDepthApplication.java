@@ -1,31 +1,32 @@
 package com.sudheer.springindepth;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.boot.SpringApplication;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
+import com.sudheer.scan.CompPersonDOA;
+import com.sudheer.springindepth.cdi.SomeCdiBusiness;
 import com.sudheer.springindepth.scope.PersonDOA;
-import ch.qos.logback.classic.Logger;
 
-@SpringBootApplication
+@Configuration
+@ComponentScan("com.sudheer.springindepth.cdi")
 public class SpringInDepthApplication {
 	
-	private static Logger LOGGER = (Logger) LoggerFactory.getLogger(SpringInDepthApplication.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(SpringInDepthApplication.class);
 	
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(SpringInDepthApplication.class, args);
+		ApplicationContext context = new AnnotationConfigApplicationContext(SpringInDepthApplication.class);
 		
-		PersonDOA personDOA = context.getBean(PersonDOA.class);
-		PersonDOA personDOA2 = context.getBean(PersonDOA.class);
-		System.out.println(personDOA);
-		System.out.println(personDOA2);
-		
-		LOGGER.info("{}",personDOA);
-		LOGGER.info("{}",personDOA.getJdbcConnection());
-		LOGGER.info("{}",personDOA.getJdbcConnection());
-		LOGGER.info("{}",personDOA2);
-		LOGGER.info("{}",personDOA2.getJdbcConnection());
+		SomeCdiBusiness business = context.getBean(SomeCdiBusiness.class);
+		System.out.println(business);
+		LOGGER.info("{}",business);
+
 	}
 
 }
