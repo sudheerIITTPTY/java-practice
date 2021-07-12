@@ -9,23 +9,23 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.sudheer.scan.CompPersonDOA;
 import com.sudheer.springindepth.cdi.SomeCdiBusiness;
 import com.sudheer.springindepth.scope.PersonDOA;
+import com.sudheer.springindepth.xml.XmlPersonDOA;
 
-@Configuration
-@ComponentScan("com.sudheer.springindepth.cdi")
-public class SpringInDepthApplication {
+public class SpringInDepthApplicationXml {
 	
-	private static Logger LOGGER = LoggerFactory.getLogger(SpringInDepthApplication.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(SpringInDepthApplicationXml.class);
 	
 	public static void main(String[] args) {
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringInDepthApplication.class);
 		
-		SomeCdiBusiness business = context.getBean(SomeCdiBusiness.class);
-		 System.out.println(business);
-		LOGGER.info("{}",business);
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		XmlPersonDOA xmlPersonDoa = context.getBean(XmlPersonDOA.class);
+		LOGGER.info("Beans Loaded -> {}",(Object)context.getBeanDefinitionNames());
+		System.out.println(xmlPersonDoa);
 		context.close();
 	}
 
