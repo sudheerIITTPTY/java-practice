@@ -9,23 +9,27 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import com.sudheer.scan.CompPersonDOA;
 import com.sudheer.springindepth.cdi.SomeCdiBusiness;
+import com.sudheer.springindepth.properties.SomeExternalService;
 import com.sudheer.springindepth.scope.PersonDOA;
 
 @Configuration
-@ComponentScan("com.sudheer.springindepth.cdi")
-public class SpringInDepthApplication {
+@ComponentScan
+//app.properties
+@PropertySource("classpath:app.properties")
+public class SpringInDepthPropertiesApplication {
 	
-	private static Logger LOGGER = LoggerFactory.getLogger(SpringInDepthApplication.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(SpringInDepthPropertiesApplication.class);
 	
 	public static void main(String[] args) {
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringInDepthApplication.class);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringInDepthPropertiesApplication.class);
 		
-		SomeCdiBusiness business = context.getBean(SomeCdiBusiness.class);
-		 System.out.println(business);
-		LOGGER.info("{}",business);
+		SomeExternalService someExternalService = context.getBean(SomeExternalService.class);
+		 System.out.println(someExternalService.returnServiceURL());
+		LOGGER.info("{}",someExternalService);
 		context.close();
 	}
 
